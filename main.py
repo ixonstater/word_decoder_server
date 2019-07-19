@@ -32,18 +32,11 @@ class Server:
         self.decoded_words_header = 'HTTP/1.1 200 OK\n' + 'Content Type: application/json\n\n'
 
     def makeSocket(self):
-        self.portNumber = 8080
-        busyPort = True
+        self.portNumber = 8081
         s = socket.socket()
-        while(busyPort):
-            try:
-                s.bind(('',self.portNumber))
-                busyPort = False
-            except OSError:
-                self.portNumber += 1
+        s.bind(('',self.portNumber))
         s.listen(5)
-        print('Listening on: ' + str(self.portNumber))
-        self.s = s
+        self.socket = s
 
     def decodeWords(self, letters):
         letters = [letter for letter in letters]
@@ -73,7 +66,7 @@ class Server:
     def serverLoop(self):
         while (True):
             self.loadFile()
-            connection, address = self.s.accept()
+            connection, address = self.socket.accept()
             connection.settimeout(10)
             self.connection = connection
             data = connection.recv(4096)
