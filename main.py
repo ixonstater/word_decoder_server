@@ -73,6 +73,7 @@ class Server:
                 data = connection.recv(4096)
             except OSError:
                 print('Timed out')
+                continue
             self.sendResponse(data)
             self.connection.close()
 
