@@ -7,7 +7,9 @@ def vettInDictionary(perms):
     for perm in perms:
         if(d.check(perm)):
             words.append(perm)
-    return list(set(words)).sort()
+    words = list(set(words))
+    words.sort(key = len, reverse = True)
+    return words
 
 def generatePermutations(letters):
     perms = []
@@ -17,3 +19,9 @@ def generatePermutations(letters):
     for perm in perms:
         words.append("".join(perm))
     return words
+
+# def main():
+#     print(vettInDictionary(generatePermutations(['n','a','d','l','i','e'])))
+
+# if __name__ == '__main__':
+#     main()
