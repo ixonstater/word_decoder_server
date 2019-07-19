@@ -7,7 +7,7 @@ def vettInDictionary(perms):
     for perm in perms:
         if(d.check(perm)):
             words.append(perm)
-    return list(set(words))
+    return list(set(words)).sort()
 
 def generatePermutations(letters):
     perms = []

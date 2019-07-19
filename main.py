@@ -1,5 +1,6 @@
 import socket
 import json
+import select
 from header_interpreter import *
 from decoder import *
 
@@ -65,11 +66,13 @@ class Server:
 
     def serverLoop(self):
         while (True):
-            self.loadFile()
             connection, address = self.socket.accept()
             connection.settimeout(10)
             self.connection = connection
-            data = connection.recv(4096)
+            try:
+                data = connection.recv(4096)
+            except OSError:
+                print('Timed out')
             self.sendResponse(data)
             self.connection.close()
 
@@ -78,6 +81,7 @@ def main():
     s = Server()
     s.makeHeader()
     s.makeSocket()
+    s.loadFile()    
     s.serverLoop()
 
 if __name__ == '__main__':
