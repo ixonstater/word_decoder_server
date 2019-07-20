@@ -1,6 +1,7 @@
 import socket
 import json
-import select
+import sys
+from datetime import datetime
 from header_interpreter import *
 from decoder import *
 
@@ -66,13 +67,13 @@ class Server:
 
     def serverLoop(self):
         while (True):
+            print(2/0)
             connection, address = self.socket.accept()
             connection.settimeout(2)
             self.connection = connection
             try:
                 data = connection.recv(4096)
             except OSError:
-                print('Timed out')
                 continue
             self.sendResponse(data)
             self.connection.close()
@@ -82,8 +83,13 @@ def main():
     s = Server()
     s.makeHeader()
     s.makeSocket()
-    s.loadFile()    
-    s.serverLoop()
+    s.loadFile()
+    try:    
+        s.serverLoop()
+    except:
+        of = open('error_log', 'w+')
+        print('Error of type ', sys.exc_info()[0], ' occured at ', str(datetime.now()), file = of)
+
 
 if __name__ == '__main__':
     main()
