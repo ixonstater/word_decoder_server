@@ -67,7 +67,7 @@ class Server:
     def serverLoop(self):
         while (True):
             connection, address = self.socket.accept()
-            connection.settimeout(10)
+            connection.settimeout(2)
             self.connection = connection
             try:
                 data = connection.recv(4096)

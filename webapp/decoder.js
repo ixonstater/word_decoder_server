@@ -39,8 +39,8 @@ function submitLetters(){
         alert(e)
         return
     }
-    words = fetch('http://localhost:8081', {method: 'POST', body: letters}).then(
-    // words = fetch('http://codefordays.io:8081', {method: 'POST', body: letters}).then(
+    // words = fetch('http://localhost:8081', {method: 'POST', body: letters}).then(
+    words = fetch('http://codefordays.io:8081', {method: 'POST', body: letters}).then(
         function(response){
             return response.json()
         }
