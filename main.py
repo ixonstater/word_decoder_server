@@ -67,13 +67,18 @@ class Server:
 
     def serverLoop(self):
         while (True):
-            print(2/0)
             connection, address = self.socket.accept()
             connection.settimeout(2)
             self.connection = connection
             try:
                 data = connection.recv(4096)
             except OSError:
+                continue
+            except MemoryError as e:
+                of = open('error_log', 'a+')
+                print(str(datetime.now()))
+                print('Memory Error in method server loop on connection.recv(4096)\n', file = of)
+                print(e, file = of)
                 continue
             self.sendResponse(data)
             self.connection.close()
